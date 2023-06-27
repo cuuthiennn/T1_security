@@ -21,7 +21,7 @@ public class UserApi {
     UserService userService;
 
     @GetMapping("/getAllUser")
-    ResponseEntity<?> doGetAllUser(){
+    public ResponseEntity<?> doGetAllUser(){
         List<User> listUser = new ArrayList<>();
         HashMap<String, Object> result = new HashMap<>();
         try {
@@ -32,7 +32,7 @@ public class UserApi {
         } catch (NullPointerException e) {
             log.error("Faid when call Api getAllUser", e);
             result.put("success", false);
-            result.put("massage", "Faild when call Api getAllUser");
+            result.put("massage", "Failed when call Api getAllUser");
             result.put("data", null);
         }
         return ResponseEntity.ok(result);
