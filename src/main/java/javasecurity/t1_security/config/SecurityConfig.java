@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import static jakarta.servlet.DispatcherType.ERROR;
 import static jakarta.servlet.DispatcherType.FORWARD;
@@ -32,13 +31,16 @@ public class SecurityConfig {
     public final CustomUserDetailsService userDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests(authorize -> authorize.dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
-                        .requestMatchers("auth/**").permitAll()
+        http.csrf(csrfConfig -> csrfConfig.disable())
+                .authorizeHttpRequests(authorize -> authorize.dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
                         .requestMatchers("user/**").hasAnyRole("Admin", "User")
+                        .requestMatchers("auth/**").permitAll()
                         .requestMatchers("role/**").hasAnyRole("Admin", "User")
                         .anyRequest()
                         .authenticated())
                 .authenticationProvider(authenticationProvider())
+                .sessionManagement(managementConfigurer ->
+                        managementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable);
         return http.build();

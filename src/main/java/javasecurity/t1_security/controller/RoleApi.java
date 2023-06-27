@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/role")
 public class RoleApi {
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
 
     @GetMapping("/getAllRole")
     public ResponseEntity<?> doGetAllUser(){
@@ -32,7 +32,7 @@ public class RoleApi {
         }catch (NullPointerException e){
             log.error("Error when call Api getAllRole", e);
             result.put("success", false);
-            result.put("massage", "Faild when call Api getAllUser!");
+            result.put("massage", "Failed when call Api getAllUser!");
             result.put("date", null);
         }
         return ResponseEntity.ok(result);
