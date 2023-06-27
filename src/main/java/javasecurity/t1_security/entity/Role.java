@@ -1,12 +1,11 @@
 package javasecurity.t1_security.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     private Long roleId;
     private String roleName;

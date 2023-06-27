@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="javasecurity.t1_security.mapper.UserMapper">
-    <resultMap id="userMapper" type="javasecurity.t1_security.entity.User">
-        <result column="makh" property="maKh" />
-        <result column="tenkh" property="tenKh" />
-        <result column="birthday" property="birthday" />
-        <result column="diachi" property="diaChi" />
-        <result column="phone" property="phone" />
-        <result column="image" property="image" />
-        <result column="isuse" property="isUse" />
-        <result column="mail" property="mail" />
-        <result column = "roleid" property = "roleId" />
-        <result column = "rolename" property = "roleName" />
-        <result column = "password" property = "password"/>
+    <resultMap id="resultMapUser" type="javasecurity.t1_security.entity.User">
+        <result column="makh" property="maKh"/>
+        <result column="tenkh" property="tenKh"/>
+        <result column="diachi" property="diaChi"/>
+        <result column="mail" property="mail"/>
+        <result column="phone" property="phone"/>
+        <result column="image" property="image"/>
+        <result column="birthday" property="birthday"/>
+        <result column="isuse" property="isUse"/>
+        <result column="roleid" property="roleId"/>
+        <result column="rolename" property="roleName"/>
+        <result column="password" property="password"/>
     </resultMap>
-    <select id="getAllUser"
-            resultMap="userMapper">
-        SELECT *
-        FROM system.f4_ivn_hr_use;
+    <select id="getAllUser" resultMap="resultMapUser">
+        select us.makh
+             , us.tenkh
+             , us.birthday
+             , us.diachi
+             , us.phone
+             , us.image
+             , us.isuse
+             , us.mail
+             , us.roleid
+             , r.rolename
+        from system.f4_ivn_hr_use us left join system.f4_ivn_hr_role r on us.roleid = r.roleid
     </select>
 </mapper>
